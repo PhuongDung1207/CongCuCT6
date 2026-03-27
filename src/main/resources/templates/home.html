@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="${profile.fullName + ' | ' + profile.title}">Phan Thi Phuong Dung | Tester Intern</title>
+	<meta
+		name="description"
+		content="Spring Boot CV website for Phan Thi Phuong Dung, focused on QA, manual testing, API testing, and automated test flows."
+	>
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+	<div class="page-shell">
+		<header class="hero">
+			<div class="panel hero-copy">
+				<p class="eyebrow">Spring Boot CV Website</p>
+				<h1 th:text="${profile.fullName}">Phan Thi Phuong Dung</h1>
+				<p class="subtitle" th:text="${profile.title}">Tester Intern</p>
+				<p class="summary" th:text="${profile.summary}">QA summary</p>
+
+				<div class="action-row">
+					<a class="button button-primary" href="mailto:phuongdungphan1207@gmail.com">Contact by Email</a>
+					<a
+						class="button button-secondary"
+						th:href="@{${profile.pdfPath}}"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Open CV PDF
+					</a>
+				</div>
+
+				<ul class="contact-strip">
+					<li th:each="contact : ${profile.contacts}">
+						<a
+							th:if="${contact.href != null}"
+							th:href="${contact.href}"
+							target="_blank"
+							rel="noopener noreferrer"
+							th:text="${contact.value}"
+						>
+							Contact
+						</a>
+						<span th:unless="${contact.href != null}" th:text="${contact.value}">Location</span>
+					</li>
+				</ul>
+			</div>
+
+			<aside class="hero-card">
+				<p class="card-kicker">Quick Snapshot</p>
+				<div class="metric-grid">
+					<article class="metric" th:each="snapshot : ${profile.snapshots}">
+						<span class="metric-label" th:text="${snapshot.label}">Metric</span>
+						<strong th:text="${snapshot.value}">Value</strong>
+					</article>
+				</div>
+
+				<div class="focus-block">
+					<p class="focus-title">Current focus</p>
+					<ul class="tag-list">
+						<li th:each="tag : ${profile.focusTags}" th:text="${tag}">API Testing</li>
+					</ul>
+				</div>
+			</aside>
+		</header>
+
+		<main class="content-grid">
+			<section class="panel panel-wide">
+				<div class="section-heading">
+					<p class="section-index">01</p>
+					<h2>Career Objective</h2>
+				</div>
+				<p class="lead" th:text="${profile.objective}">Objective</p>
+			</section>
+
+			<section class="panel">
+				<div class="section-heading">
+					<p class="section-index">02</p>
+					<h2>Education</h2>
+				</div>
+				<article class="education-card">
+					<div class="row-between">
+						<strong th:text="${profile.education.school}">University</strong>
+						<span class="date-pill" th:text="${profile.education.period}">2022 - Present</span>
+					</div>
+					<p class="muted" th:text="${'Major: ' + profile.education.major}">Major</p>
+					<div class="fact-grid">
+						<div>
+							<span class="fact-label">GPA</span>
+							<strong th:text="${profile.education.gpa}">3.82 / 4.0</strong>
+						</div>
+						<div>
+							<span class="fact-label">Expected Graduation</span>
+							<strong th:text="${profile.education.expectedGraduation}">2026</strong>
+						</div>
+					</div>
+				</article>
+			</section>
+
+			<section class="panel">
+				<div class="section-heading">
+					<p class="section-index">03</p>
+					<h2>Strengths</h2>
+				</div>
+				<ul class="feature-list">
+					<li th:each="strength : ${profile.strengths}" th:text="${strength}">Strength</li>
+				</ul>
+			</section>
+
+			<section class="panel panel-wide">
+				<div class="section-heading">
+					<p class="section-index">04</p>
+					<h2>Projects</h2>
+				</div>
+
+				<div class="project-stack">
+					<article class="project-card" th:each="project : ${profile.projects}">
+						<div class="row-between project-top">
+							<div>
+								<h3 th:text="${project.name}">Project Name</h3>
+								<p class="muted" th:text="${project.stack}">Stack</p>
+							</div>
+							<span class="date-pill" th:text="${project.period}">Period</span>
+						</div>
+						<ul class="feature-list">
+							<li th:each="highlight : ${project.highlights}" th:text="${highlight}">Highlight</li>
+						</ul>
+					</article>
+				</div>
+			</section>
+
+			<section class="panel">
+				<div class="section-heading">
+					<p class="section-index">05</p>
+					<h2>Skills</h2>
+				</div>
+				<div class="skill-groups">
+					<article th:each="skill : ${profile.skillGroups}">
+						<h3 th:text="${skill.name}">Testing</h3>
+						<p th:text="${skill.value}">Functional Testing</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="panel">
+				<div class="section-heading">
+					<p class="section-index">06</p>
+					<h2>Certificates</h2>
+				</div>
+				<ul class="certificate-list">
+					<li th:each="certificate : ${profile.certificates}">
+						<span th:text="${certificate.name}">Certificate</span>
+						<strong th:text="${certificate.year}">2025</strong>
+					</li>
+				</ul>
+			</section>
+
+			<section class="panel panel-wide">
+				<div class="section-heading">
+					<p class="section-index">07</p>
+					<h2>Additional Information</h2>
+				</div>
+				<div class="info-banner">
+					<p>
+						<strong>Foreign language:</strong>
+						<span th:text="${profile.foreignLanguage}">English</span>
+					</p>
+					<p>
+						<strong>Achievement:</strong>
+						<span th:text="${profile.achievement}">IELTS mock</span>
+					</p>
+					<p>
+						<strong>Portfolio note:</strong>
+						<span th:text="${profile.portfolioNote}">Spring Boot note</span>
+					</p>
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+</html>
